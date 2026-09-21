@@ -2,7 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "sique_werewolf_judge_v1";
-  const APP_VERSION = "2026.09.21-fix8";
+  const APP_VERSION = "2026.09.21-fix9-mobile";
   const MAX_UNDO = 30;
 
   const ROLE_META = {
@@ -1707,7 +1707,7 @@
     const variantOptions = Object.values(VARIANTS).map(v => `<option value="${v.id}">${esc(v.name)} · ${v.playerCount}人</option>`).join("");
     $("#app").innerHTML = `<section class="hero">
       <div class="card hero-copy"><div class="kicker">GitHub Pages · 纯前端</div><h2>思潜狼人杀法官工具</h2><p>本版已重建主脚本，修复乱码与卡死，并保留多房间、夜间口令、身份登记、自动结算、警徽、发言顺序、撤销和 JSON 导入导出。手机端按钮会自动重排，固定口令可用真人录音替换系统语音。</p></div>
-      <div class="card hero-aside"><strong>当前版本 ${esc(APP_VERSION)}</strong><p class="help">所有房间只保存在当前浏览器。正式开局前建议导出房间 JSON 备份。</p><div class="row"><button class="btn ghost" type="button" data-action="import-room">导入房间 JSON</button><button class="btn ghost" type="button" data-voice-action="open">音色 / 真人录音</button></div></div>
+      <div class="card hero-aside"><strong>当前版本 ${esc(APP_VERSION)}</strong><p class="help">所有房间只保存在当前浏览器。正式开局前建议导出房间 JSON 备份。</p><div class="row"><button class="btn good" type="button" data-voice-action="unlock">启用/测试语音</button><button class="btn ghost" type="button" data-action="import-room">导入房间 JSON</button><button class="btn ghost" type="button" data-voice-action="open">音色 / 真人录音</button></div></div>
     </section>
     <div class="section-title"><div><h2>新建房间</h2><p>法官线下发牌，网页只记录与辅助播报。</p></div></div>
     <section class="panel">
@@ -1730,13 +1730,14 @@
     const container = $("#topActions");
     if (!container) return;
     if (!room) {
-      container.innerHTML = `<button class="btn ghost small" type="button" data-voice-action="open">音色 / 真人录音</button><button class="btn ghost small" type="button" data-action="import-room">导入房间</button>`;
+      container.innerHTML = `<button class="btn good small" type="button" data-voice-action="unlock">启用/测试语音</button><button class="btn ghost small" type="button" data-voice-action="open">音色 / 真人录音</button><button class="btn ghost small" type="button" data-action="import-room">导入房间</button>`;
       return;
     }
     container.innerHTML = `<button class="btn ghost small" type="button" data-action="home">房间列表</button>
       <button class="btn ghost small" type="button" data-action="undo" ${room.undo?.length ? "" : "disabled"}>撤销</button>
       <button class="btn ghost small" type="button" data-action="export-room" data-room="${room.id}">导出</button>
       <select class="select" id="speechRate" aria-label="播报语速" style="width:auto;min-height:36px;padding:6px 9px"><option value="0.84">慢速</option><option value="0.92">自然</option><option value="1">正常</option></select>
+      <button class="btn good small" type="button" data-voice-action="unlock">启用/测试语音</button>
       <button class="btn ghost small" type="button" data-voice-action="open">音色 / 真人录音</button>`;
     const rate = $("#speechRate");
     if (rate) rate.value = String(store.settings.speechRate || 0.92);

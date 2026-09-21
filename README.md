@@ -211,3 +211,12 @@ node tests/smoke-speech.cjs
 - 强 / 弱梦魇恐惧狼人分支。
 - 同守同救结算。
 - 旧版板型 ID 与警徽字段迁移。
+
+
+## fix9 手机语音兼容
+
+- 顶部新增“启用/测试语音”，手机首次进入页面后先点击一次。
+- 系统 TTS 必须直接由用户点击触发；不再依赖异步初始化。
+- 保留当前 `SpeechSynthesisUtterance` 的强引用，减少 iOS Safari 偶发静音。
+- 同时尝试解锁 HTMLAudio，兼容已绑定的真人录音。
+- iPhone/iPad 推荐 Safari，Android 推荐 Chrome；微信、QQ、GitHub App 等内置浏览器可能无法稳定使用 Web Speech。

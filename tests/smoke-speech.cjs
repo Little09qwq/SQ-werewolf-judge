@@ -33,9 +33,14 @@ window.document = document;
 const context = {
   window,
   document,
+  navigator: { userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit Safari" },
   localStorage: { getItem() { return null; }, setItem() {} },
   SpeechSynthesisUtterance: SpeechSynthesisUtteranceMock,
-  Audio: function Audio() {},
+  Audio: function Audio() {
+    this.volume = 1;
+    this.play = () => { calls.push("audio-play"); return Promise.resolve(); };
+    this.pause = () => {};
+  },
   URL: { revokeObjectURL() {}, createObjectURL() { return "blob:test"; } },
   setTimeout,
   clearTimeout,
@@ -58,5 +63,15 @@ if (!calls.some(x => x.startsWith("speak:"))) {
 }
 if (calls.includes("cancel")) {
   throw new Error("idle speech synthesis should not be cancelled before a new utterance");
+}
+
+calls.length = 0;
+window.JudgeSpeech.unlock();
+const unlockSpeak = calls.find(x => x.startsWith("speak:"));
+if (!unlockSpeak || !unlockSpeak.includes("语音已启用")) {
+  throw new Error("mobile unlock must synchronously call speechSynthesis.speak()");
+}
+if (!calls.includes("audio-play")) {
+  throw new Error("mobile unlock must also synchronously prime HTMLAudio");
 }
 console.log("smoke-speech: PASS", calls.join(" | "));
