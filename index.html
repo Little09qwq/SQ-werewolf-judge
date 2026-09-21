@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#10131a" />
+  <meta name="color-scheme" content="dark" />
+  <title>思潜狼人杀 · 法官工具</title>
+  <link rel="stylesheet" href="./styles.css?v=20260921-fix8" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">SQ</div>
+      <div>
+        <h1>思潜狼人杀 · 法官工具</h1>
+        <p>线下面杀夜间流程 / 语音播报 / 信息结算</p>
+      </div>
+    </div>
+    <div class="top-actions" id="topActions"></div>
+  </header>
+  <main id="app" class="app-shell">
+    <section class="panel"><h2>正在加载法官工具…</h2><p>如果长时间停留在这里，请确认 app.js 与 speech.js 已一起上传。</p></section>
+  </main>
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <input id="importRoomFile" type="file" accept="application/json,.json" hidden />
+  <script defer src="./speech.js?v=20260921-fix8"></script>
+  <script defer src="./app.js?v=20260921-fix8"></script>
+</body>
+</html>
